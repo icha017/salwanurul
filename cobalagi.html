@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Telekonsultasi Luka Kronis — Kolcaba (Tema Biru Profesional)</title>
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg-1: #eaf0ff;
+    --bg-2: #f6f9ff;
+    --card: #ffffff;
+    --blue-700: #1f4ed8;
+    --blue-600: #3b82f6;
+    --blue-500: #60a5fa;
+    --muted: #6b7280;
+    --success: #059669;
+    --danger: #ef4444;
+    --glass: rgba(255,255,255,0.6);
+    --shadow: 0 8px 30px rgba(16,24,40,0.08);
+    --radius: 12px;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family:Inter,system-ui,Segoe UI,Roboto,Arial;
+    background: linear-gradient(180deg,var(--bg-1),var(--bg-2));
+    color:#0f172a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+  }
+
+  /* App container */
+  .app {
+    width:100%;
+    max-width:1200px;
+    display:grid;
+    grid-template-columns: 320px 1fr;
+    gap:20px;
+    align-items:start;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    background: linear-gradient(180deg,var(--blue-700),var(--blue-600));
+    color:white;
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:var(--shadow);
+    min-height:640px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+
+  .brand {
+    display:flex;
+    gap:12px;
+    align-items:center;
+  }
+  .logo-dot{
+    width:42px;height:42px;border-radius:10px;
+    background:linear-gradient(180deg,#fff6, #ffffff20);
+    display:flex;align-items:center;justify-content:center;color:var(--blue-700);
+    font-weight:700;font-size:18px;
+  }
+  .brand h1{margin:0;font-size:18px}
+  .brand p{margin:0;font-size:13px;opacity:0.95}
+
+  .side-section { background: rgba(255,255,255,0.06); padding:12px; border-radius:10px; }
+  .muted-white{color:rgba(255,255,255,0.9);font-size:13px}
+
+  .login-row{display:flex;gap:8px;align-items:center}
+  .input, .select, .textarea { width:100%; padding:10px 12px; border-radius:8px; border:none; font-size:14px; }
+  .btn {
+    display:inline-block;padding:10px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600;
+  }
+  .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.12);color:white}
+  .btn-primary{background:white;color:var(--blue-700)}
+
+
+  /* MAIN */
+  .main {
+    min-height:640px;
+    background: linear-gradient(180deg,#ffffff,#fbfdff);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+  header h2{margin:0;font-size:20px}
+  header p{margin:0;color:var(--muted);font-size:13px}
+
+  .grid{display:grid;gap:16px}
+  .two-col{grid-template-columns: 1fr 420px;}
+  .card{background:var(--card);padding:14px;border-radius:10px;box-shadow:0 6px 20px rgba(16,24,40,0.04)}
+  label{display:block;font-weight:600;margin-bottom:6px;color:#0b1220;font-size:13px}
+
+  .form-row{display:flex;gap:10px}
+  .form-row .input{flex:1}
+
+  /* recommendation list */
+  .result-item{display:flex;justify-content:space-between;align-items:center;padding:10px;border:1px solid #f1f7ff;border-radius:8px;margin-top:10px}
+  .small{font-size:13px;color:var(--muted)}
+
+  table{width:100%;border-collapse:collapse;margin-top:10px}
+  th,td{padding:10px;border-bottom:1px solid #f3f6ff;text-align:left;font-size:14px}
+  th{background:#fbfdff;font-weight:700;color:#0b1220}
+
+  footer{font-size:13px;color:var(--muted);text-align:center;padding-top:6px}
+
+  /* responsive */
+  @media (max-width:960px){
+    .app{grid-template-columns:1fr; padding:12px}
+    .sidebar{order:2;display:none}
+    .two-col{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" aria-label="Sidebar">
+    <div class="brand">
+      <div class="logo-dot">TK</div>
+      <div>
+        <h1>TeleKolcaba</h1>
+        <p>Perawatan Luka Kronis • Comfort Theory</p>
+      </div>
+    </div>
+
+    <div class="side-section">
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-weight:700">Masuk</div>
+          <div class="muted-white" style="font-size:13px;margin-top:6px">Gunakan nama kamu untuk menyimpan sesi</div>
+        </div>
+      </div>
+
+      <div style="margin-top:10px">
+        <input id="usernameSide" class="input" placeholder="Nama pengguna" />
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button id="btnLoginSide" class="btn btn-primary">Masuk</button>
+          <button id="btnGuestSide" class="btn btn-ghost">Tamu</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-section">
+      <div style="font-weight:700;margin-bottom:8px">Taksonomi Kolcaba</div>
+      <div class="muted-white"><strong>Konteks:</strong> Fisik, Psikospiritual, Sosiokultural, Lingkungan</div>
+      <div class="muted-white" style="margin-top:6px"><strong>Tipe:</strong> Relief, Ease, Transcendence</div>
+    </div>
+
+    <div style="margin-top:auto" class="small muted-white">Demo edukasi • Tidak menggantikan rekomendasi klinis</div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main" role="main">
+    <header>
+      <div>
+        <h2>Telekonsultasi Luka Kronis</h2>
+        <p class="small" id="welcomeSub">Silakan masuk untuk mulai menyimpan sesi (opsional).</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="text-align:right">
+          <div id="displayUser" style="font-weight:700">Tamu</div>
+          <div class="small" id="displayUserStatus">Belum masuk</div>
+        </div>
+        <div style="width:44px;height:44px;border-radius:8px;background:linear-gradient(180deg,var(--blue-600),var(--blue-500));display:flex;align-items:center;justify-content:center;color:white;font-weight:700" id="avatar">T</div>
+      </div>
+    </header>
+
+    <section class="grid two-col">
+      <!-- LEFT: Form pasien & skor -->
+      <div class="card">
+        <h3 style="margin:0 0 8px 0">Tambah / Pilih Pasien</h3>
+        <div class="small" style="margin-bottom:10px">Masukkan data pasien dan nilai ketidaknyamanan (1 = nyaman, 10 = sangat tidak nyaman).</div>
+
+        <div style="display:flex;gap:8px">
+          <input id="pasienNama" class="input" placeholder="Nama pasien" />
+          <input id="pasienId" class="input" placeholder="ID (P001)" style="width:120px" />
+        </div>
+
+        <div style="margin-top:12px">
+          <label>Skor Ketidaknyamanan</label>
+          <div class="form-row">
+            <div>
+              <div class="small">Fisik</div>
+              <input id="iFisik" class="input" type="number" min="1" max="10" value="8" />
+            </div>
+            <div>
+              <div class="small">Psikospiritual</div>
+              <input id="iPsiko" class="input" type="number" min="1" max="10" value="7" />
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-top:10px">
+            <div>
+              <div class="small">Lingkungan</div>
+              <input id="iLing" class="input" type="number" min="1" max="10" value="3" />
+            </div>
+            <div>
+              <div class="small">Sosial–Budaya</div>
+              <input id="iSos" class="input" type="number" min="1" max="10" value="5" />
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button id="btnSavePatient" class="btn btn-primary">Simpan & Rekomendasi</button>
+            <button id="btnLoadSample" class="btn btn-ghost">Isi Contoh</button>
+          </div>
+
+          <div id="warning" class="small" style="color:var(--danger);margin-top:10px;display:none"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Rekomendasi & Simulasi -->
+      <div class="card">
+        <h3 style="margin:0 0 8px 0">Hasil & Rekomendasi</h3>
+        <div id="hasilRekomendasi" style="min-height:170px" class="small">
+          Belum ada hasil. Isi pasien lalu klik "Simpan & Rekomendasi".
+        </div>
+
+        <div style="margin-top:12px">
+          <label>Simulasikan skor setelah intervensi (opsional)</label>
+          <div class="form-row" style="margin-top:6px">
+            <input id="postFisik" class="input" type="number" min="1" max="10" placeholder="Fisik (opsional)" />
+            <input id="postPsiko" class="input" type="number" min="1" max="10" placeholder="Psikospiritual (opsional)" />
+          </div>
+          <div class="form-row" style="margin-top:6px">
+            <input id="postLing" class="input" type="number" min="1" max="10" placeholder="Lingkungan (opsional)" />
+            <input id="postSos" class="input" type="number" min="1" max="10" placeholder="Sosial–Budaya (opsional)" />
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <button id="btnApplyInterv" class="btn btn-primary">Terapkan & Simpan Sesi</button>
+            <button id="btnResetForm" class="btn btn-ghost">Reset</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORY -->
+    <section class="card">
+      <h3 style="margin:0 0 8px 0">Riwayat Sesi</h3>
+      <div style="overflow:auto">
+        <table id="historyTable" aria-label="Riwayat sesi">
+          <thead>
+            <tr><th>Tanggal</th><th>Pasien</th><th>Konteks Terburuk</th><th>Intervensi</th><th>Skor Awal → Akhir</th></tr>
+          </thead>
+          <tbody>
+            <tr><td colspan="5" class="small">Belum ada riwayat.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display:flex;gap:8px;margin-top:10px">
+        <button id="btnClearHistory" class="btn btn-ghost">Hapus Riwayat</button>
+        <button id="btnExport" class="btn btn-ghost">Ekspor JSON</button>
+        <div style="margin-left:auto" class="small">Skala: 1 = nyaman • 10 = sangat tidak nyaman</div>
+      </div>
+    </section>
+
+    <footer>TeleKolcaba • Demo edukasi • Kolcaba comfort theory</footer>
+  </main>
+</div>
+
+<!-- SCRIPT: logic (mirip versi sebelumnya, diperhalus) -->
+<script>
+/*
+  TeleKolcaba — professional blue theme
+  - localStorage untuk riwayat
+  - interpretasi benar: skor lebih besar = lebih tidak nyaman
+  - "Meningkat" artinya skor turun
+*/
+
+/* Intervensi (default) */
+const INTERVENSI = {
+  Fisik: { nama: "Video Panduan Perawatan Luka", jenis: "Ease", efek: 2, biaya: 50000 },
+  Psikospiritual: { nama: "Sesi Konseling Koping", jenis: "Transcendence", efek: 2, biaya: 150000 },
+  Lingkungan: { nama: "Optimasi Kebersihan & Ventilasi", jenis: "Relief", efek: 1, biaya: 25000 },
+  "Sosial–Budaya": { nama: "Dukungan Keluarga & Edukasi", jenis: "Ease", efek: 1, biaya: 0 }
+};
+
+const STORAGE_KEY = "telekolcaba_prof_v1";
+
+/* helpers */
+function clamp(v,min,max){ return Math.max(min, Math.min(max, Number(v))); }
+function formatMoney(n){ return Number(n).toLocaleString('id-ID'); }
+function maybeNum(v){ return v===""?NaN:Number(v); }
+
+/* storage */
+function saveSessionToStorage(s){
+  const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+  arr.unshift(s);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+}
+function loadHistoryFromStorage(){ return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
+function clearHistoryStorage(){ localStorage.removeItem(STORAGE_KEY); }
+
+/* Login */
+const btnLoginSide = document.getElementById("btnLoginSide");
+const btnGuestSide = document.getElementById("btnGuestSide");
+const usernameSide = document.getElementById("usernameSide");
+const displayUser = document.getElementById("displayUser");
+const displayUserStatus = document.getElementById("displayUserStatus");
+const avatar = document.getElementById("avatar");
+const welcomeSub = document.getElementById("welcomeSub");
+
+let currentUser = localStorage.getItem("telekolcaba_user") || "Tamu";
+setUser(currentUser);
+
+btnLoginSide.onclick = () => {
+  const name = (usernameSide.value || "").trim();
+  if(!name){ alert("Isi nama dulu ya."); return; }
+  currentUser = name;
+  localStorage.setItem("telekolcaba_user", currentUser);
+  setUser(currentUser);
+  usernameSide.value = "";
+};
+btnGuestSide.onclick = () => {
+  currentUser = "Tamu";
+  localStorage.setItem("telekolcaba_user", currentUser);
+  setUser(currentUser);
+};
+
+function setUser(name){
+  displayUser.textContent = name;
+  displayUserStatus.textContent = (name==="Tamu")? "Belum masuk" : "Masuk";
+  avatar.textContent = name[0]? name[0].toUpperCase() : "T";
+  welcomeSub.textContent = `Halo ${name}! Isi data pasien untuk memulai analisis Kolcaba.`;
+}
+
+/* Form & logic */
+const btnLoadSample = document.getElementById("btnLoadSample");
+const btnSavePatient = document.getElementById("btnSavePatient");
+const hasilEl = document.getElementById("hasilRekomendasi");
+const warningEl = document.getElementById("warning");
+let currentPatient = null;
+let currentPlan = null;
+
+btnLoadSample.onclick = () => {
+  document.getElementById("pasienNama").value = "Budi Santoso";
+  document.getElementById("pasienId").value = "P001";
+  document.getElementById("iFisik").value = 8;
+  document.getElementById("iPsiko").value = 7;
+  document.getElementById("iLing").value = 3;
+  document.getElementById("iSos").value = 5;
+};
+
+function cariKonteksTerburuk(kenyamanan){
+  let max = -Infinity, key=null;
+  for(const k in kenyamanan) if(kenyamanan[k] > max){ max = kenyamanan[k]; key = k; }
+  return {konteks:key, nilai:max};
+}
+
+btnSavePatient.onclick = () => {
+  const nama = (document.getElementById("pasienNama").value || "").trim();
+  const id = (document.getElementById("pasienId").value || "").trim();
+  const fisik = clamp(document.getElementById("iFisik").value,1,10);
+  const psiko = clamp(document.getElementById("iPsiko").value,1,10);
+  const ling = clamp(document.getElementById("iLing").value,1,10);
+  const sos = clamp(document.getElementById("iSos").value,1,10);
+
+  if(!nama || !id){
+    warningEl.style.display = "block"; warningEl.textContent = "Isi Nama & ID pasien dulu.";
+    return;
+  }
+  warningEl.style.display = "none";
+
+  currentPatient = {
+    id, nama,
+    skorAwal: { Fisik:fisik, Psikospiritual:psiko, Lingkungan:ling, "Sosial–Budaya":sos }
+  };
+
+  const {konteks, nilai} = cariKonteksTerburuk(currentPatient.skorAwal);
+  const rekom = INTERVENSI[konteks] || INTERVENSI["Sosial–Budaya"];
+  currentPlan = { konteks, nilaiAwal: nilai, intervensi: rekom };
+
+  renderRecommendation();
+};
+
+function renderRecommendation(){
+  if(!currentPatient || !currentPlan){
+    hasilEl.innerHTML = `<div class="small">Belum ada pasien. Isi dan simpan pasien dulu.</div>`; return;
+  }
+  const p = currentPatient, plan = currentPlan;
+  hasilEl.innerHTML = `
+    <div style="display:flex;gap:10px;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-weight:700">${p.nama} <span style="font-weight:400;color:var(--muted);">(${p.id})</span></div>
+        <div class="small">Konteks tertinggi: <strong>${plan.konteks}</strong></div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-weight:700;color:var(--blue-700)">${plan.nilaiAwal}/10</div>
+        <div class="small">Lebih besar = lebih tidak nyaman</div>
+      </div>
+    </div>
+
+    <div class="result-item" style="margin-top:12px">
+      <div>
+        <div style="font-weight:700">${plan.intervensi.nama}</div>
+        <div class="small">${plan.intervensi.jenis} • Dampak perkiraan: -${plan.intervensi.efek} poin</div>
+      </div>
+      <div style="text-align:right">
+        <div class="small">Biaya estimasi</div>
+        <div style="font-weight:700">Rp ${formatMoney(plan.intervensi.biaya)}</div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px" class="small">Catatan: Skor lebih besar = lebih tidak nyaman. "Meningkat" berarti skor turun setelah intervensi.</div>
+  `;
+}
+
+/* Apply intervensi & simpan sesi */
+document.getElementById("btnApplyInterv").onclick = () => {
+  if(!currentPatient || !currentPlan){ alert("Isi pasien & jalankan rekomendasi dulu."); return; }
+
+  const post = {
+    Fisik: maybeNum(document.getElementById("postFisik").value),
+    Psikospiritual: maybeNum(document.getElementById("postPsiko").value),
+    Lingkungan: maybeNum(document.getElementById("postLing").value),
+    "Sosial–Budaya": maybeNum(document.getElementById("postSos").value)
+  };
+
+  // hitung akhir
+  const target = currentPlan.konteks;
+  const efek = currentPlan.intervensi.efek;
+  let skorAkhir = {...currentPatient.skorAwal};
+
+  if(isFinite(post[target])) skorAkhir[target] = clamp(post[target],1,10);
+  else skorAkhir[target] = clamp(skorAkhir[target] - efek, 1, 10);
+
+  for(const k of ["Fisik","Psikospiritual","Lingkungan","Sosial–Budaya"]){
+    if(isFinite(post[k])) skorAkhir[k] = clamp(post[k],1,10);
+  }
+
+  // status per konteks
+  const status = {};
+  for(const k in skorAkhir){
+    if(skorAkhir[k] < currentPatient.skorAwal[k]) status[k] = "Meningkat";
+    else if(skorAkhir[k] > currentPatient.skorAwal[k]) status[k] = "Menurun";
+    else status[k] = "Tidak berubah";
+  }
+
+  const sesi = {
+    tanggal: (new Date()).toLocaleString(),
+    pengguna: currentUser,
+    pasien: currentPatient,
+    rencana: currentPlan,
+    skorAwal: currentPatient.skorAwal,
+    skorAkhir,
+    status,
+    biaya: currentPlan.intervensi.biaya
+  };
+
+  saveSessionToStorage(sesi);
+  currentPatient = null; currentPlan = null;
+  renderRecommendation(); renderHistory();
+  alert("Sesi tersimpan di riwayat.");
+};
+
+/* reset */
+document.getElementById("btnResetForm").onclick = () => {
+  document.getElementById("pasienNama").value = "";
+  document.getElementById("pasienId").value = "";
+  document.getElementById("iFisik").value = 8;
+  document.getElementById("iPsiko").value = 7;
+  document.getElementById("iLing").value = 3;
+  document.getElementById("iSos").value = 5;
+  document.getElementById("postFisik").value = "";
+  document.getElementById("postPsiko").value = "";
+  document.getElementById("postLing").value = "";
+  document.getElementById("postSos").value = "";
+  warningEl.style.display = "none";
+};
+
+/* History rendering */
+function renderHistory(){
+  const rows = loadHistoryFromStorage();
+  const tbody = document.querySelector("#historyTable tbody");
+  tbody.innerHTML = "";
+  if(!rows.length){
+    tbody.innerHTML = `<tr><td colspan="5" class="small">Belum ada riwayat.</td></tr>`;
+    return;
+  }
+  for(const s of rows){
+    const tr = document.createElement("tr");
+    const konteks = s.rencana.konteks;
+    const interv = s.rencana.intervensi.nama;
+    const skorText = `${s.skorAwal[konteks]} → ${s.skorAkhir[konteks]}`;
+    tr.innerHTML = `<td>${s.tanggal}</td>
+                    <td>${s.pasien.nama} (${s.pasien.id})</td>
+                    <td>${konteks}</td>
+                    <td>${interv}</td>
+                    <td>${skorText}</td>`;
+    tbody.appendChild(tr);
+  }
+}
+renderHistory();
+
+/* Clear history & export */
+document.getElementById("btnClearHistory").onclick = () => {
+  if(confirm("Hapus semua riwayat?")){ clearHistoryStorage(); renderHistory(); }
+};
+document.getElementById("btnExport").onclick = () => {
+  const data = loadHistoryFromStorage();
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:"application/json"});
+  const url = URL.createObjectURL(blob); const a = document.createElement("a");
+  a.href = url; a.download = "riwayat_telekolcaba.json"; a.click(); URL.revokeObjectURL(url);
+};
+
+/* init sample */
+document.getElementById("btnLoadSample").click();
+
+</script>
+</body>
+</html>
